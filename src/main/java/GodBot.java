@@ -41,7 +41,7 @@ public class GodBot {
     }
 
     private boolean processInput(String input){
-      String[] inputParts = input.split(" "); //trying to process the input
+      String[] inputParts = input.split(" ",2); //trying to process the input
       String command = inputParts[0];
       String argument;
       if(inputParts.length > 1){
@@ -59,15 +59,18 @@ public class GodBot {
       }
       else if (command.equals("mark")){
         processMark(argument);
-        Integer index = Integer.parseInt(argument) - 1;
-        System.out.println("I have marked this simple task as done, mortal. \n");
-        System.out.println(index+1 + "." + tasks.get(index));
       }
       else if (command.equals("unmark")){
         processUnmark(argument);
-        Integer index = Integer.parseInt(argument) - 1;
-        System.out.println("I have marked this simple task as undone, mortal. \n");
-        System.out.println(index+1 + "." + tasks.get(index));
+      }
+      else if (command.equals("todo")){
+        processTodo(argument);
+      }
+      else if (command.equals("deadline")){
+        processDeadline(argument);
+      }
+      else if (command.equals("event")){
+        processEvent(argument);
       }
       else{
         storeList(input);
@@ -90,10 +93,45 @@ public class GodBot {
     private void processMark(String argument){
       int index = Integer.parseInt(argument) - 1;
       tasks.get(index).markDone();
+      System.out.println("I have marked this simple task as done, mortal.");
+      System.out.println(index+1 + "." + tasks.get(index)+ "\n");
     }
     private void processUnmark(String argument){
       int index = Integer.parseInt(argument) - 1;
       tasks.get(index).markNotDone();
+      System.out.println("I have marked this simple task as undone, mortal.");
+      System.out.println(index+1 + "." + tasks.get(index) + "\n");
     }
+
+    private void processTodo(String argument){
+      Task todo = new ToDo(argument.trim());
+      tasks.add(todo);
+      System.out.println("I have added your mortal task: " + todo);
+      System.out.println("Now you have " + tasks.size() + " mortal tasks left.\n");
+    }
+
+    private void processDeadline(String argument){
+      String[] argumentParts = argument.split(" /by ");
+      String description = argumentParts[0];
+      String deadline = argumentParts[1];
+      Task deadlineTask = new Deadline(description, deadline);
+      tasks.add(deadlineTask);
+      System.out.println("I have added your mortal task: " + deadlineTask);
+      System.out.println("Now you have " + tasks.size() + " mortal tasks left. \n");
+    }
+
+    private void processEvent(String argument){
+      String[] argumentParts = argument.split(" /from | /to");
+      String description = argumentParts[0];
+      String from = argumentParts[1];
+      String to = argumentParts[2];
+      Task eventTask = new Event(description, from, to);
+      tasks.add(eventTask);
+      System.out.println("I have added your mortal task: " + eventTask);
+      System.out.println("Now you have " + tasks.size() + " mortal tasks left. \n");
+     
+    }
+
+    
     
 }
