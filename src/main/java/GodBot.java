@@ -73,6 +73,9 @@ public class GodBot {
         else if (command.equals("event")){
           processEvent(argument);
         }
+        else if (command.equals("delete")){
+          processDelete(argument);
+        }
         else{ //invalid command
           throw new GodBotException("Speak properly mortal, I do not understand you.");
         }
@@ -150,5 +153,18 @@ public class GodBot {
     }
 
     
+    private void processDelete(String argument){
+      try{
+        int index = Integer.parseInt(argument) - 1;
+        if (index < 0 || index >= tasks.size()){
+          throw new GodBotException("Enter a proper number, mortal. I am no fool.");
+        }
+        System.out.println("I have removed this simple task, mortal.");
+        System.out.println(index+1 + "." + tasks.get(index)+ "\n");
+        tasks.remove(index);
+    }catch (GodBotException e){
+      System.out.println(e.getMessage());
+      }
+    }
     
 }
