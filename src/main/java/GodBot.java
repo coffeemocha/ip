@@ -1,8 +1,10 @@
 import java.util.*;
+import java.io.IOException;
 
 public class GodBot {
     private ArrayList<Task> tasks = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
+    private Storage storage = new Storage("./data/godbot.txt");    
     
     public static void main(String[] args) {
       GodBot godBot = new GodBot();
@@ -12,6 +14,11 @@ public class GodBot {
     public void run(){
       welcomeBanner();
       boolean isRunning = true;
+      try{
+        tasks = storage.load();
+      }catch (IOException e){
+        System.out.println("Failed to load your tasks mortal.");
+      }
       
       while(isRunning){
         String input = readInput();
@@ -91,9 +98,10 @@ public class GodBot {
     }
 
     private void storeList(String input){
-      Task task = new Task(input);
+      Task task = new ToDo(input);
       tasks.add(task);
       System.out.println("Added your mortal task: " + input + "\n");
+      saveTasks();
     }
 
     private void processMark(String argument){
@@ -105,6 +113,7 @@ public class GodBot {
         tasks.get(index).markDone();
         System.out.println("I have marked this simple task as done, mortal.");
         System.out.println(index+1 + "." + tasks.get(index)+ "\n");
+        saveTasks();
     }catch (GodBotException e){
       System.out.println(e.getMessage());
       }
@@ -118,6 +127,7 @@ public class GodBot {
         tasks.get(index).markNotDone();
         System.out.println("I have marked this simple task as undone, mortal.");
         System.out.println(index+1 + "." + tasks.get(index) + "\n");
+        saveTasks();
       }catch (GodBotException e){
         System.out.println(e.getMessage());
       }
@@ -128,6 +138,7 @@ public class GodBot {
       tasks.add(todo);
       System.out.println("I have added your mortal task: " + todo);
       System.out.println("Now you have " + tasks.size() + " mortal tasks left.\n");
+      saveTasks();
     }
 
     private void processDeadline(String argument){
@@ -138,6 +149,7 @@ public class GodBot {
       tasks.add(deadlineTask);
       System.out.println("I have added your mortal task: " + deadlineTask);
       System.out.println("Now you have " + tasks.size() + " mortal tasks left. \n");
+      saveTasks();
     }
 
     private void processEvent(String argument){
@@ -149,7 +161,7 @@ public class GodBot {
       tasks.add(eventTask);
       System.out.println("I have added your mortal task: " + eventTask);
       System.out.println("Now you have " + tasks.size() + " mortal tasks left. \n");
-     
+      saveTasks();
     }
 
     
@@ -162,8 +174,17 @@ public class GodBot {
         System.out.println("I have removed this simple task, mortal.");
         System.out.println(index+1 + "." + tasks.get(index)+ "\n");
         tasks.remove(index);
+        saveTasks();
     }catch (GodBotException e){
       System.out.println(e.getMessage());
+      }
+    }
+
+    private void saveTasks(){
+      try{
+        storage.save(tasks);
+      }catch (IOException e){
+        System.out.println("Your system failed my save task command mortal because" + e);
       }
     }
     
