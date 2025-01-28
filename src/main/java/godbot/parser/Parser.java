@@ -1,3 +1,13 @@
+package godbot.parser;
+
+import godbot.task.TaskList;
+import godbot.task.Task;
+import godbot.task.ToDo;
+import godbot.task.Deadline;
+import godbot.task.Event;
+import godbot.storage.Storage;
+import godbot.ui.Ui;
+
 public class Parser {
     public static boolean processCommand(String input, TaskList tasks, Storage storage, Ui ui) {
         try {
@@ -20,7 +30,14 @@ public class Parser {
                 tasks.addTask(task);
                 storage.save(tasks.getAllTasks());
                 ui.showMessage("Added: " + task);
-            } else {
+            } else if (command.equals("event")) {
+                String[] parts = argument.split(" /from | /to",3);
+                Task task = new Event(parts[0], parts[1], parts[2]);
+                tasks.addTask(task);
+                storage.save(tasks.getAllTasks());
+                ui.showMessage("Added: " + task);
+            }
+              else {
                 ui.showMessage("Speak properly mortal, I do not understand you.");
             }
         } catch (Exception e) {
