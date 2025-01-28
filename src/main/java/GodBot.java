@@ -2,200 +2,36 @@ import java.util.*;
 import java.io.IOException;
 
 public class GodBot {
-    private ArrayList<Task> tasks = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
-    private Storage storage = new Storage("./data/godbot.txt");    
-    
+    private TaskList tasks;
+    private Storage storage;
+    private Ui ui;
+
+    public GodBot(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (IOException e) {
+            ui.showMessage("Failed to load your tasks mortal.");
+            tasks = new TaskList();
+        }
+    }
+
     public static void main(String[] args) {
-      GodBot godBot = new GodBot();
-      godBot.run();
-    }
-    
-    public void run(){
-      welcomeBanner();
-      boolean isRunning = true;
-      try{
-        tasks = storage.load();
-      }catch (IOException e){
-        System.out.println("Failed to load your tasks mortal.");
-      }
-      
-      while(isRunning){
-        String input = readInput();
-        isRunning = processInput(input);
-      }
-
-      goodbyeBanner();
+        new GodBot("./data/godbot.txt").run();
     }
 
+    public void run() {
+        ui.showWelcomeMessage();
+        boolean isRunning = true;
 
-    private void welcomeBanner(){
-	  String logo ="  ________           ._____________        __    \n"
-           + " /  _____/  ____   __| _/\\______   \\ _____/  |_  \n"
-           + "/   \\  ___ /  _ \\ / __ |  |    |  _//  _ \\   __\\ \n"
-           + "\\    \\_\\  (  <_> ) /_/ |  |    |   (  <_> )  |   \n"
-           + " \\______  /\\____/\\____ |  |______  /\\____/|__|   \n"
-           + "        \\/            \\/         \\/              \n"; 
-          System.out.println("Speak, puny mortal.\n" + logo);
+        while (isRunning) {
+            String input = ui.readCommand();
+            isRunning = Parser.processCommand(input, tasks, storage, ui);
+        }
+
+        ui.showGoodbyeMessage();
     }
-
-    private void goodbyeBanner(){
-      System.out.println("Begone mortal.");
-    }
-
-    private String readInput(){
-      return scanner.nextLine();
-    }
-
-    private boolean processInput(String input){
-      try{
-        String[] inputParts = input.split(" ",2); //trying to process the input
-        String command = inputParts[0];
-        String argument;
-        if(inputParts.length > 1){
-          argument = inputParts[1];
-        }
-        else{
-          argument = "";
-        }
-
-        if (command.equals("bye")){ //start of command checking
-          return false;
-        } 
-        else if (command.equals("list")){
-          showList();
-        }
-        else if (command.equals("mark")){
-          processMark(argument);
-        }
-        else if (command.equals("unmark")){
-          processUnmark(argument);
-        }
-        else if (command.equals("todo")){
-          processTodo(argument);
-        }
-        else if (command.equals("deadline")){
-          processDeadline(argument);
-        }
-        else if (command.equals("event")){
-          processEvent(argument);
-        }
-        else if (command.equals("delete")){
-          processDelete(argument);
-        }
-        else{ //invalid command
-          throw new GodBotException("Speak properly mortal, I do not understand you.");
-        }
-        } catch (GodBotException e){
-          System.out.println(e.getMessage());
-        }
-        return true;
-    }    
-    private void showList(){
-      for (int i = 0; i<tasks.size();i++){
-      System.out.println(i+1 + "." + tasks.get(i));
-      }
-    }
-
-    private void storeList(String input){
-      Task task = new ToDo(input);
-      tasks.add(task);
-      System.out.println("Added your mortal task: " + input + "\n");
-      saveTasks();
-    }
-
-    private void processMark(String argument){
-      try{
-        int index = Integer.parseInt(argument) - 1;
-        if (index < 0 || index >= tasks.size()){
-          throw new GodBotException("Enter a proper number, mortal. I am no fool.");
-        }
-        tasks.get(index).markDone();
-        System.out.println("I have marked this simple task as done, mortal.");
-        System.out.println(index+1 + "." + tasks.get(index)+ "\n");
-        saveTasks();
-    }catch (GodBotException e){
-      System.out.println(e.getMessage());
-      }
-    }
-    private void processUnmark(String argument){
-      try{
-        int index = Integer.parseInt(argument) - 1;
-        if (index < 0 || index >= tasks.size()){
-          throw new GodBotException("Enter a proper number, mortal. I am no fool.");
-        }
-        tasks.get(index).markNotDone();
-        System.out.println("I have marked this simple task as undone, mortal.");
-        System.out.println(index+1 + "." + tasks.get(index) + "\n");
-        saveTasks();
-      }catch (GodBotException e){
-        System.out.println(e.getMessage());
-      }
-    }
-
-    private void processTodo(String argument){
-      Task todo = new ToDo(argument.trim());
-      tasks.add(todo);
-      System.out.println("I have added your mortal task: " + todo);
-      System.out.println("Now you have " + tasks.size() + " mortal tasks left.\n");
-      saveTasks();
-    }
-
-    private void processDeadline(String argument){
-      String[] argumentParts = argument.split(" /by ");
-      if (argumentParts.length < 2) {
-        System.out.println("Mortal say deadline <task> or I won't understand.");
-        return;
-      }
-
-      String description = argumentParts[0];
-      String deadline = argumentParts[1];
-      try{
-        Task deadlineTask = new Deadline(description, deadline);
-        tasks.add(deadlineTask);
-        System.out.println("I have added your mortal task: " + deadlineTask);
-        System.out.println("Now you have " + tasks.size() + " mortal tasks left. \n");
-        saveTasks();
-      }catch (Exception e){
-        System.out.println("Provide the right format mortal (yyyy-MM-dd)");
-      }
-    }
-
-
-    private void processEvent(String argument){
-      String[] argumentParts = argument.split(" /from | /to");
-      String description = argumentParts[0];
-      String from = argumentParts[1];
-      String to = argumentParts[2];
-      Task eventTask = new Event(description, from, to);
-      tasks.add(eventTask);
-      System.out.println("I have added your mortal task: " + eventTask);
-      System.out.println("Now you have " + tasks.size() + " mortal tasks left. \n");
-      saveTasks();
-    }
-
-    
-    private void processDelete(String argument){
-      try{
-        int index = Integer.parseInt(argument) - 1;
-        if (index < 0 || index >= tasks.size()){
-          throw new GodBotException("Enter a proper number, mortal. I am no fool.");
-        }
-        System.out.println("I have removed this simple task, mortal.");
-        System.out.println(index+1 + "." + tasks.get(index)+ "\n");
-        tasks.remove(index);
-        saveTasks();
-    }catch (GodBotException e){
-      System.out.println(e.getMessage());
-      }
-    }
-
-    private void saveTasks(){
-      try{
-        storage.save(tasks);
-      }catch (IOException e){
-        System.out.println("Your system failed my save task command mortal because" + e);
-      }
-    }
-    
 }
+
