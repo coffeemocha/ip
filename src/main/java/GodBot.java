@@ -143,14 +143,24 @@ public class GodBot {
 
     private void processDeadline(String argument){
       String[] argumentParts = argument.split(" /by ");
+      if (argumentParts.length < 2) {
+        System.out.println("Mortal say deadline <task> or I won't understand.");
+        return;
+      }
+
       String description = argumentParts[0];
       String deadline = argumentParts[1];
-      Task deadlineTask = new Deadline(description, deadline);
-      tasks.add(deadlineTask);
-      System.out.println("I have added your mortal task: " + deadlineTask);
-      System.out.println("Now you have " + tasks.size() + " mortal tasks left. \n");
-      saveTasks();
+      try{
+        Task deadlineTask = new Deadline(description, deadline);
+        tasks.add(deadlineTask);
+        System.out.println("I have added your mortal task: " + deadlineTask);
+        System.out.println("Now you have " + tasks.size() + " mortal tasks left. \n");
+        saveTasks();
+      }catch (Exception e){
+        System.out.println("Provide the right format mortal (yyyy-MM-dd)");
+      }
     }
+
 
     private void processEvent(String argument){
       String[] argumentParts = argument.split(" /from | /to");
