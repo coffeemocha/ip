@@ -1,3 +1,10 @@
+package godbot;
+import godbot.ui.Ui;
+import godbot.storage.Storage;
+import godbot.parser.Parser;
+import godbot.task.Task;
+import godbot.task.TaskList;
+import godbot.exception.GodBotException;
 import java.util.*;
 import java.io.IOException;
 
