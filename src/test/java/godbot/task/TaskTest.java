@@ -6,14 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TaskTest {
 
     @Test
-    public void testMarkDoneAndMarkNotDone() {
-        Task task = new ToDo("attend 2103 tutorial later"); 
-        
-        task.markDone();
-        assertTrue(task.isDone, "Task should be marked as done");
+    public void testToDoToString() {
+        ToDo task = new ToDo("Buy milk");
 
-        task.markNotDone();
-        assertFalse(task.isDone, "Task should be marked as not done");
+        assertNotNull(task, "Task should not be null");
+        assertEquals("[T][ ]Buy milk", task.toString(), "ToDo toString() should match expected format");
     }
 }
 
