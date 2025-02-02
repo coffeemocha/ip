@@ -51,7 +51,10 @@ public class Parser {
                 tasks.addTask(task);
                 storage.save(tasks.getAllTasks());
                 ui.showMessage("Added: " + task);
-            } else {
+	    } else if (command.equals("find")) {
+		String result = tasks.findTasks(argument);
+		ui.showMessage(result);
+	    } else {
                 ui.showMessage("Speak properly mortal, I do not understand you.");
             }
         } catch (Exception e) {
