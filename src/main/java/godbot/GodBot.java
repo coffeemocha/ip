@@ -16,7 +16,7 @@ import java.io.IOException;
  * and continuously processes user commands.
  */
 public class GodBot {
-    private TaskList tasks;
+    private TaskList taskList;
     private Storage storage;
     private Ui ui;
     private static final String DEFAULT_FILE_PATH = "./data/godbot.txt";
@@ -31,10 +31,10 @@ public class GodBot {
         storage = new Storage(filePath);
 
         try {
-            tasks = new TaskList(storage.load());
+            taskList = new TaskList(storage.load());
         } catch (IOException e) {
             ui.showMessage("Failed to load your tasks, mortal.");
-            tasks = new TaskList();
+            taskList = new TaskList();
         }
     }
 
@@ -57,8 +57,8 @@ public class GodBot {
         boolean isRunning = true;
 
         while (isRunning) {
-            String input = ui.readCommand();
-            isRunning = Parser.processCommand(input, tasks, storage, ui);
+            String userInput = ui.readCommand();
+            isRunning = Parser.processCommand(userInput, taskList, storage, ui);
         }
 
         ui.showGoodbyeMessage();
