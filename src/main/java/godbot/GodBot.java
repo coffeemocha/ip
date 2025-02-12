@@ -9,7 +9,7 @@ import godbot.exception.GodBotException;
 
 import java.util.ArrayList;
 import java.io.IOException;
-	
+
 /**
  * The GodBot class is the starting point for the chatbot.
  * It initializes the user interface, storage, and task list,
@@ -27,11 +27,14 @@ public class GodBot {
      * @param filePath The path to the file used for storing task data.
      */
     public GodBot(String filePath) {
-        ui = new Ui();
+        assert filePath != null : "File path cannot be null, mortal.";
+	ui = new Ui();
+	assert ui != null : "Ui should be initialized, mortal.";
         storage = new Storage(filePath);
-
+	assert storage!= null : "Stroage should be initialized, mortal.";
         try {
             tasks = new TaskList(storage.load());
+	    assert tasks != null : "TaskList should not be null";
         } catch (IOException e) {
             ui.showMessage("Failed to load your tasks, mortal.");
             tasks = new TaskList();
@@ -58,10 +61,18 @@ public class GodBot {
 
         while (isRunning) {
             String input = ui.readCommand();
-            isRunning = Parser.processCommand(input, tasks, storage, ui);
+            String response = Parser.processCommand(input, tasks, storage, ui);
+            ui.showMessage(response);
+            if (input.equals("bye")) {
+                isRunning = false;
+            }
         }
 
         ui.showGoodbyeMessage();
+    }
+
+    public String getResponse(String input) {
+        return Parser.processCommand(input, tasks, storage, ui);
     }
 }
 
