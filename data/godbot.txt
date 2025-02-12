@@ -1,2 +1,3 @@
 T | 0 | wtf is this
-E | 0 | useless phi | |2pm |  1pm
+E | 0 | useless phi | ||2pm |  1pm
+T | 0 | win game
