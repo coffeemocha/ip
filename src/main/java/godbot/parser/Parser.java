@@ -40,7 +40,9 @@ public class Parser {
                 response = "Added: " + task;
             } else if (command.equals("find")) {
                 response = tasks.findTasks(argument);
-            } else {
+            } else if (command.equals("remind")) {
+	    	response = "Here is what you need to do mortal: \n" + tasks.showTasks();
+	    } else {
                 response = "Speak properly mortal, I do not understand you.";
             }
         } catch (Exception e) {

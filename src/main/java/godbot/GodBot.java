@@ -62,9 +62,9 @@ public class GodBot {
 
         while (isRunning) {
             String userInput = ui.readCommand();
-            String response = Parser.processCommand(userInput, tasks, storage, ui);
+            String response = Parser.processCommand(userInput, taskList, storage, ui);
             ui.showMessage(response);
-            if (input.equals("bye")) {
+            if (userInput.equals("bye")) {
                 isRunning = false;
             }
         }
@@ -72,8 +72,8 @@ public class GodBot {
         ui.showGoodbyeMessage();
     }
 
-    public String getResponse(String input) {
-        return Parser.processCommand(input, tasks, storage, ui);
+    public String getResponse(String userInput) {
+        return Parser.processCommand(userInput, taskList, storage, ui);
     }
 }
 
