@@ -8,9 +8,11 @@ import godbot.task.Event;
 import godbot.storage.Storage;
 import godbot.ui.Ui;
 
+import java.lang.StringBuilder;
+
 /**
- * The Parser class is the class used for interpreting and processing user commands.
- * It parses actions from the user to the appropriate functions based on the user input.
+ * The Parser class is responsible for interpreting and processing user commands.
+ * It parses actions from the user and maps them to the appropriate functions.
  */
 public class Parser {
 
@@ -21,46 +23,56 @@ public class Parser {
      * @param tasks   The current task list to which tasks may be added or displayed.
      * @param storage The storage system used to save tasks persistently.
      * @param ui      The user interface for displaying messages and feedback.
-     * @return false if the command is "bye" to terminate the application,
-     *         otherwise true in order to continue running.
+     * @return A response string containing the chatbot's reply.
      */
-    public static boolean processCommand(String input, TaskList tasks, Storage storage, Ui ui) {
+    public static String processCommand(String input, TaskList tasks, Storage storage, Ui ui) {
+        StringBuilder response = new StringBuilder();
+
         try {
             String[] inputParts = input.split(" ", 2);
             String command = inputParts[0];
             String argument = (inputParts.length > 1) ? inputParts[1] : "";
 
             if (command.equals("bye")) {
-                return false;
+                response.append("Begone, mortal.");
+                return response.toString();
             } else if (command.equals("list")) {
-                tasks.showTasks(ui);
+                response.append(tasks.showTasks());
             } else if (command.equals("todo")) {
                 Task task = new ToDo(argument);
                 tasks.addTask(task);
                 storage.save(tasks.getAllTasks());
-                ui.showMessage("Added: " + task);
+                response.append("Added: ").append(task);
             } else if (command.equals("deadline")) {
                 String[] parts = argument.split(" /by ");
-                Task task = new Deadline(parts[0], parts[1]);
-                tasks.addTask(task);
-                storage.save(tasks.getAllTasks());
-                ui.showMessage("Added: " + task);
+                if (parts.length < 2) {
+                    response.append("Invalid deadline format. Use: deadline <task> /by <time>");
+                } else {
+                    Task task = new Deadline(parts[0], parts[1]);
+                    tasks.addTask(task);
+                    storage.save(tasks.getAllTasks());
+                    response.append("Added: ").append(task);
+                }
             } else if (command.equals("event")) {
                 String[] parts = argument.split(" /from | /to", 3);
-                Task task = new Event(parts[0], parts[1], parts[2]);
-                tasks.addTask(task);
-                storage.save(tasks.getAllTasks());
-                ui.showMessage("Added: " + task);
-	    } else if (command.equals("find")) {
-		String result = tasks.findTasks(argument);
-		ui.showMessage(result);
-	    } else {
-                ui.showMessage("Speak properly mortal, I do not understand you.");
+                if (parts.length < 3) {
+                    response.append("Invalid event format. Use: event <task> /from <start> /to <end>");
+                } else {
+                    Task task = new Event(parts[0], parts[1], parts[2]);
+                    tasks.addTask(task);
+                    storage.save(tasks.getAllTasks());
+                    response.append("Added: ").append(task);
+                }
+            } else if (command.equals("find")) {
+                response.append(tasks.findTasks(argument));
+            } else {
+                response.append("Speak properly, mortal. I do not understand you.");
             }
         } catch (Exception e) {
-            ui.showMessage("Invalid command, mortal.");
+            response.append("Invalid command, mortal.");
         }
-        return true;
+
+        return response.toString();
     }
 }
 

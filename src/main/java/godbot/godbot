@@ -9,7 +9,7 @@ import godbot.exception.GodBotException;
 
 import java.util.ArrayList;
 import java.io.IOException;
-
+	
 /**
  * The GodBot class is the starting point for the chatbot.
  * It initializes the user interface, storage, and task list,
@@ -54,32 +54,24 @@ public class GodBot {
      */
     public void run() {
         ui.showWelcomeMessage();
+        boolean isRunning = true;
 
-        while (true) {
+        while (isRunning) {
             String input = ui.readCommand();
-            String response = Parser.processCommand(input, tasks, storage, ui);
-
-            if (input.equalsIgnoreCase("bye")) {
-                ui.showGoodbyeMessage();
-                break;
-            }
-
-            ui.showMessage(response);
+            isRunning = Parser.processCommand(input, tasks, storage, ui);
         }
-    }
 
+        ui.showGoodbyeMessage();
+    }
+    
     /**
-     * Processes user input and returns a response for the GUI.
-     *
-     * @param input The user input string.
-     * @return The chatbot's response as a string.
-     */
+    * Processes user input and returns a response for the GUI.
+    *
+    * @param input The user input string.
+    * @return The chatbot's response as a string.
+    */
     public String getResponse(String input) {
         return Parser.processCommand(input, tasks, storage, ui);
-    }
-
-    public Ui getUi(){
-	return ui;
     }
 }
 

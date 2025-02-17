@@ -14,8 +14,9 @@ public class ParserTest {
         Storage storage = new Storage("dummy.txt");
         Ui ui = new Ui();
 
-        boolean result = Parser.processCommand("random nonsense", taskList, storage, ui);
-        assertTrue(result, "Parser should return true (continue running) for unknown commands");
+        String result = Parser.processCommand("random nonsense", taskList, storage, ui);
+        assertEquals("Speak properly, mortal. I do not understand you.", result, 
+                     "Parser should return an appropriate error message for unknown commands.");
     }
 }
 
