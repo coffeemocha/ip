@@ -15,7 +15,8 @@ public class ParserTest {
         Ui ui = new Ui();
 
         String result = Parser.processCommand("random nonsense", taskList, storage, ui);
-	assertEquals("Speak properly mortal, I do not understand you.", result);
+        assertEquals("Speak properly, mortal. I do not understand you.", result, 
+                     "Parser should return an appropriate error message for unknown commands.");
     }
 }
 

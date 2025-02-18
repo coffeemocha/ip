@@ -1,4 +1,4 @@
 T | 0 | wtf is this
-E | 0 | useless phi | |||2pm |  1pm
 T | 0 | win game
-T | 0 | lose game
+T | 0 | test
+E | 0 | swe test | |12pm |  1300pm

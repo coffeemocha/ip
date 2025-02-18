@@ -20,21 +20,21 @@ public class Ui {
     /**
      * Displays the welcome message along with the GodBot logo when the program starts.
      */
-    public void showWelcomeMessage() {
+    public String showWelcomeMessage() {
         String logo = "  ________           ._____________        __    \n"
                      + " /  _____/  ____   __| _/\\______   \\ _____/  |_  \n"
                      + "/   \\  ___ /  _ \\ / __ |  |    |  _//  _ \\   __\\ \n"
                      + "\\    \\_\\  (  <_> ) /_/ |  |    |   (  <_> )  |   \n"
                      + " \\______  /\\____/\\____ |  |______  /\\____/|__|   \n"
                      + "        \\/            \\/         \\/              \n";
-        System.out.println("Speak, puny mortal.\n" + logo);
+        return "Speak, puny mortal.\n" + logo;
     }
 
     /**
      * Displays the goodbye message when the program ends.
      */
-    public void showGoodbyeMessage() {
-        System.out.println("Begone mortal.");
+    public String showGoodbyeMessage() {
+        return "Begone mortal.";
     }
 
     /**
