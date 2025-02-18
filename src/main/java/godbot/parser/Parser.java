@@ -7,7 +7,6 @@ import godbot.task.Deadline;
 import godbot.task.Event;
 import godbot.storage.Storage;
 import godbot.ui.Ui;
-
 import java.lang.StringBuilder;
 
 /**
@@ -27,7 +26,6 @@ public class Parser {
      */
     public static String processCommand(String input, TaskList tasks, Storage storage, Ui ui) {
         StringBuilder response = new StringBuilder();
-
         try {
             String[] inputParts = input.split(" ", 2);
             String command = inputParts[0];
@@ -65,13 +63,14 @@ public class Parser {
                 }
             } else if (command.equals("find")) {
                 response.append(tasks.findTasks(argument));
+            } else if (command.equals("remind")) {
+                response.append("Here is what you need to do mortal: \n" + tasks.showTasks();
             } else {
                 response.append("Speak properly, mortal. I do not understand you.");
             }
         } catch (Exception e) {
             response.append("Invalid command, mortal.");
         }
-
         return response.toString();
     }
 }

@@ -16,7 +16,7 @@ import java.io.IOException;
  * and continuously processes user commands.
  */
 public class GodBot {
-    private TaskList tasks;
+    private TaskList taskList;
     private Storage storage;
     private Ui ui;
     private static final String DEFAULT_FILE_PATH = "./data/godbot.txt";
@@ -27,14 +27,18 @@ public class GodBot {
      * @param filePath The path to the file used for storing task data.
      */
     public GodBot(String filePath) {
-        ui = new Ui();
+        assert filePath != null : "File path cannot be null, mortal.";
+	ui = new Ui();
+	assert ui != null : "Ui should be initialized, mortal.";
         storage = new Storage(filePath);
-
+	assert storage!= null : "Stroage should be initialized, mortal.";
         try {
-            tasks = new TaskList(storage.load());
+            taskList = new TaskList(storage.load());  
+	    assert taskList != null : "TaskList should not be null";
+
         } catch (IOException e) {
             ui.showMessage("Failed to load your tasks, mortal.");
-            tasks = new TaskList();
+            taskList = new TaskList();
         }
     }
 
@@ -55,15 +59,14 @@ public class GodBot {
     public void run() {
         ui.showWelcomeMessage();
 
+
         while (true) {
             String input = ui.readCommand();
             String response = Parser.processCommand(input, tasks, storage, ui);
-
             if (input.equalsIgnoreCase("bye")) {
                 ui.showGoodbyeMessage();
                 break;
             }
-
             ui.showMessage(response);
         }
     }
@@ -80,6 +83,10 @@ public class GodBot {
 
     public Ui getUi(){
 	return ui;
+    }
+
+    public String getResponse(String userInput) {
+        return Parser.processCommand(userInput, taskList, storage, ui);
     }
 }
 
