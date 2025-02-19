@@ -6,7 +6,6 @@ import godbot.parser.Parser;
 import godbot.task.Task;
 import godbot.task.TaskList;
 import godbot.exception.GodBotException;
-
 import java.util.ArrayList;
 import java.io.IOException;
 
@@ -28,14 +27,13 @@ public class GodBot {
      */
     public GodBot(String filePath) {
         assert filePath != null : "File path cannot be null, mortal.";
-	ui = new Ui();
-	assert ui != null : "Ui should be initialized, mortal.";
+        ui = new Ui();
+        assert ui != null : "Ui should be initialized, mortal.";
         storage = new Storage(filePath);
-	assert storage!= null : "Stroage should be initialized, mortal.";
+        assert storage!= null : "Stroage should be initialized, mortal.";
         try {
             taskList = new TaskList(storage.load());  
 	    assert taskList != null : "TaskList should not be null";
-
         } catch (IOException e) {
             ui.showMessage("Failed to load your tasks, mortal.");
             taskList = new TaskList();
@@ -74,6 +72,10 @@ public class GodBot {
 
     public String getResponse(String input) {
         return Parser.processCommand(input, tasks, storage, ui);
+    }
+
+    public Ui getUi(){
+        return ui;
     }
 }
 

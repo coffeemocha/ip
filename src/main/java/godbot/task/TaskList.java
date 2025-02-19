@@ -79,20 +79,20 @@ public class TaskList {
     }
 
     public String findTasks(String keyword){
-    	StringBuilder result = new StringBuilder("Here are the matching tasks in your list:\n");
-    	boolean found = false;
-    	for (int i = 0; i < tasks.size(); i++) {
+        StringBuilder result = new StringBuilder("Here are the matching tasks in your list:\n");
+        boolean found = false;
+        for (int i = 0; i < tasks.size(); i++) {
           Task task = tasks.get(i);
           if (task.description.toLowerCase().contains(keyword.toLowerCase())) {
             result.append((i + 1)).append(". ").append(task).append("\n");
             found = true;
           }
-    	}
-    	if (!found) {
+        }
+        if (!found) {
           result.append("No matching tasks found.");
-    	}
-    	return result.toString();	
-    	}
+        }
+        return result.toString();	
+        }
 
 
     /**
