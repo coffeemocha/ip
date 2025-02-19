@@ -64,36 +64,40 @@ public class TaskList {
     }
 
     /**
-     * Displays all tasks in the task list using the provided UI.
+     * Returns a string representation of all tasks in the task list.
      *
-     * @param ui The UI object used to display the tasks.
+     * @return A formatted string of tasks.
      */
-    public void showTasks(Ui ui) {
+    public String showTasks() {
         if (tasks.isEmpty()) {
-            ui.showMessage("No tasks in your list, mortal.");
+            return "No tasks in your list, mortal.";
         } else {
+            StringBuilder response = new StringBuilder();
             for (int i = 0; i < tasks.size(); i++) {
-                ui.showMessage((i + 1) + ". " + tasks.get(i));
+                response.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
             }
+            return response.toString();
         }
     }
 
-    public String findTasks(String keyword){
+    /**
+     * Finds and returns tasks that contain the specified keyword.
+     *
+     * @param keyword The search keyword.
+     * @return A formatted string containing matching tasks.
+     */
+    public String findTasks(String keyword) {
         StringBuilder result = new StringBuilder("Here are the matching tasks in your list:\n");
         boolean found = false;
         for (int i = 0; i < tasks.size(); i++) {
-          Task task = tasks.get(i);
-          if (task.description.toLowerCase().contains(keyword.toLowerCase())) {
-            result.append((i + 1)).append(". ").append(task).append("\n");
-            found = true;
-          }
+            Task task = tasks.get(i);
+            if (task.description.toLowerCase().contains(keyword.toLowerCase())) {
+                result.append((i + 1)).append(". ").append(task).append("\n");
+                found = true;
+            }
         }
-        if (!found) {
-          result.append("No matching tasks found.");
-        }
-        return result.toString();	
-        }
-
+        return found ? result.toString() : "No matching tasks found.";
+    }
 
     /**
      * Retrieves the task at the specified index.
