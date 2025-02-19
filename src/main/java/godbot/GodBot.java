@@ -33,7 +33,7 @@ public class GodBot {
         assert storage!= null : "Stroage should be initialized, mortal.";
         try {
             taskList = new TaskList(storage.load());  
-	    assert taskList != null : "TaskList should not be null";
+            assert taskList != null : "TaskList should not be null";
         } catch (IOException e) {
             ui.showMessage("Failed to load your tasks, mortal.");
             taskList = new TaskList();
@@ -56,20 +56,23 @@ public class GodBot {
      */
     public void run() {
         ui.showWelcomeMessage();
-        boolean isRunning = true;
-
-        while (isRunning) {
-            String userInput = ui.readCommand();
-            String response = Parser.processCommand(userInput, tasks, storage, ui);
-            ui.showMessage(response);
-            if (input.equals("bye")) {
-                isRunning = false;
+        while (true) {
+            String input = ui.readCommand();
+            String response = Parser.processCommand(input, tasks, storage, ui);
+            if (input.equalsIgnoreCase("bye")) {
+                ui.showGoodbyeMessage();
+                break;
             }
+            ui.showMessage(response);
         }
-
-        ui.showGoodbyeMessage();
     }
 
+    /**
+     * Processes user input and returns a response for the GUI.
+     *
+     * @param input The user input string.
+     * @return The chatbot's response as a string.
+     */
     public String getResponse(String input) {
         return Parser.processCommand(input, tasks, storage, ui);
     }

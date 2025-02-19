@@ -13,7 +13,7 @@ public class ParserTest {
         Storage storage = new Storage("dummy.txt");
         Ui ui = new Ui();
         String result = Parser.processCommand("random nonsense", taskList, storage, ui);
-        assertEquals("Speak properly mortal, I do not understand you.", result);
-    }
+        assertEquals("Speak properly, mortal. I do not understand you.", result, "Parser should return error");
+   }
 }
 
