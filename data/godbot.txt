@@ -1,3 +1,2 @@
-T | 0 | win game
-E | 1 | swe test | ||||||12pm |  1300pm
-T | 0 | ui.png
+T | 1 | win game
+E | 1 | swe test | |||||||12pm |  1300pm
