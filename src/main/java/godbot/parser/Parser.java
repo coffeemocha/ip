@@ -64,7 +64,7 @@ public class Parser {
             } else if (command.equals("find")) {
                 response.append(tasks.findTasks(argument));
             } else if (command.equals("remind")) {
-                response.append("Here is what you need to do mortal: \n" + tasks.showTasks();
+                response.append("Here is what you need to do mortal: \n" + tasks.showTasks());
             } else {
                 response.append("Speak properly, mortal. I do not understand you.");
             }

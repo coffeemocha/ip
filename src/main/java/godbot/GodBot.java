@@ -58,7 +58,7 @@ public class GodBot {
         ui.showWelcomeMessage();
         while (true) {
             String input = ui.readCommand();
-            String response = Parser.processCommand(input, tasks, storage, ui);
+            String response = Parser.processCommand(input, taskList, storage, ui);
             if (input.equalsIgnoreCase("bye")) {
                 ui.showGoodbyeMessage();
                 break;
@@ -74,7 +74,7 @@ public class GodBot {
      * @return The chatbot's response as a string.
      */
     public String getResponse(String input) {
-        return Parser.processCommand(input, tasks, storage, ui);
+        return Parser.processCommand(input, taskList, storage, ui);
     }
 
     public Ui getUi(){
