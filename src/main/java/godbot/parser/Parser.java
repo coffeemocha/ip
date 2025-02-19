@@ -36,7 +36,26 @@ public class Parser {
                 return response.toString();
             } else if (command.equals("list")) {
                 response.append(tasks.showTasks());
-            } else if (command.equals("todo")) {
+            } else if (command.equals("mark")) {
+	        int markIndex = Integer.parseInt(argument) - 1;
+		tasks.getTask(markIndex).markDone();
+		storage.save(tasks.getAllTasks());
+		response.append("Marked as done: ")
+			.append(tasks.getTask(markIndex));
+	    } else if (command.equals("unmark")) {
+                int unmarkIndex = Integer.parseInt(argument) - 1;
+		tasks.getTask(unmarkIndex).markNotDone();
+		storage.save(tasks.getAllTasks());
+		response.append("Marked as not done: ")
+			.append(tasks.getTask(unmarkIndex));
+	    } else if(command.equals("delete")) {
+		int deleteIndex = Integer.parseInt(argument) - 1;
+		Task removedTask = tasks.deleteTask(deleteIndex);
+		storage.save(tasks.getAllTasks());
+		response.append("Removed: ")
+			.append(removedTask);
+	    }
+	      else if (command.equals("todo")) {
                 Task task = new ToDo(argument);
                 tasks.addTask(task);
                 storage.save(tasks.getAllTasks());

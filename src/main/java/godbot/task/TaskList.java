@@ -117,5 +117,12 @@ public class TaskList {
     public ArrayList<Task> getAllTasks() {
         return tasks;
     }
+
+    public Task deleteTask(int index) {
+        Task removedTask = tasks.remove(index);
+	return removedTask;
+	
+    }
+
 }
 
