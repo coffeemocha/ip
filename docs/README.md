@@ -62,10 +62,7 @@ Marked as done: [T] [X] Add Ui.png
 - Add and remove tasks easily.  
 - View tasks in a structured list.  
 
-### ⏳ Feature: Deadlines (Coming Soon)  
-- Set due dates for tasks.  
-
-### 🔔 Feature: Reminders (Coming Soon)  
+### 🔔 Feature: Reminders
 - Receive notifications for upcoming deadlines.  
 
 ---
@@ -75,5 +72,3 @@ Marked as done: [T] [X] Add Ui.png
 - Disobedience will result in **divine confusion** (invalid command errors).  
 
 ---
-
-Now you can **copy and paste** this **directly** into your `README.md`. Nothing extra, no weird formatting, just pure GitHub Flavored Markdown. 🚀🔥
