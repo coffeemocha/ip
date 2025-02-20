@@ -6,7 +6,7 @@
 ---
 
 ## 🔥 Introduction  
-**GodBot** is the supreme AI assistant that manages your mundane mortal tasks. It listens to your feeble commands and responds with divine judgment.  
+**GodBot** is the supreme AI assistant that manages your mundane mortal tasks. It listens to your feeble commands and responds with divine judgment. I named it GodBot after its creator, a God Coder. A+ for Holy Trinity with 2103 on its way, I am a God Coder.  
 
 ---
 
