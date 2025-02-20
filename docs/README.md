@@ -1,30 +1,74 @@
-# Duke User Guide
+# GodBot User Guide  
 
-// Update the title above to match the actual product name
+## 📸 Product Screenshot  
+![GodBot UI](Ui.png)  
 
-// Product screenshot goes here
+---
 
-// Product intro goes here
+## 🔥 Introduction  
+**GodBot** is the supreme AI assistant that manages your mundane mortal tasks. It listens to your feeble commands and responds with divine judgment.  
 
-## Adding deadlines
+---
 
-// Describe the action and its outcome.
+## ✍️ Commands and Usage  
 
-// Give examples of usage
-
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
-
+### 📜 Viewing the Task List  
+**Command:**  
+```sh
+list
 ```
-expected output
+**Expected Output:**  
+```sh
+No tasks in your list, mortal.
 ```
 
-## Feature ABC
+---
 
-// Feature details
+### 📌 Adding a Task  
+**Command:**  
+```sh
+todo <task_name>
+```
+**Example:**  
+```sh
+todo Add Ui.png
+```
+**Expected Output:**  
+```sh
+Added: [T] [ ] Add Ui.png
+```
 
+---
 
-## Feature XYZ
+### ✅ Marking a Task as Done  
+**Command:**  
+```sh
+mark <task_number>
+```
+**Example:**  
+```sh
+mark 1
+```
+**Expected Output:**  
+```sh
+Marked as done: [T] [X] Add Ui.png
+```
 
-// Feature details
+---
+
+## ⚡ Features  
+
+### 📍 Feature: Task Management  
+- Add and remove tasks easily.  
+- View tasks in a structured list.  
+
+### 🔔 Feature: Reminders
+- Receive notifications for upcoming deadlines.  
+
+---
+
+## ⚠️ **Warnings for Mortals**  
+- GodBot only listens to **properly structured** commands.  
+- Disobedience will result in **divine confusion** (invalid command errors).  
+
+---
