@@ -1,14 +1,24 @@
-This project is based on the Duke project template, which is named after the Java mascot Duke. I renamed it to GodBot, inspired by myself being a GOD coder. Below are the instructions to set up and run the project.
+# GodBot Project Template
 
-Setting up in Intellij
-Prerequisites: JDK 17, update Intellij to the most recent version.
+> **"Speak, puny mortal."**  
+> _The divine words of GodBot_
 
-Open Intellij (if you are not in the welcome screen, click File > Close Project to close the existing project first)
-Open the project into Intellij as follows:
-Click Open.
-Select the project directory, and click OK.
-If there are any further prompts, accept the defaults.
-Configure the project to use JDK 17 (not other versions) as explained in here.
-In the same dialog, set the Project language level field to the SDK default option.
-After that, locate the src/main/java/GodBot.java file, right-click it, and choose Run GodBot.main() (if the code editor is showing compile errors, try restarting the IDE).
-Warning: Keep the src\main\java folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+GodBot is your supreme task manager, guiding you through the chaotic realm of unfinished work. Follow the sacred setup instructions below, mortal.
+
+## Setting up in IntelliJ
+
+### Prerequisites  
+☑ JDK 17  
+☑ The latest IntelliJ IDEA  
+
+### Steps to summon GodBot:
+1. Open IntelliJ (if you are in another project, close it first).
+2. Open the project in IntelliJ:  
+   - Click **Open**  
+   - Select the project directory  
+   - Click **OK**  
+3. Configure the project to use **JDK 17** (no lesser version shall suffice) as explained [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).  
+   - In the same dialog, set the **Project language level** field to `SDK default`.  
+4. Locate the `src/main/java/GodBot.java` file, right-click it, and choose **Run GodBot.main()**.  
+   - If your IDE is aligned with the divine plan, you shall witness the following output:
+
